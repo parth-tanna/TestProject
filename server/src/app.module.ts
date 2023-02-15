@@ -15,6 +15,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { ServeStaticOptionsService } from "./serveStaticOptions.service";
 import { GraphQLModule } from "@nestjs/graphql";
+import { SalesModule } from "./sales/sales.module";
 
 @Module({
   controllers: [],
@@ -24,6 +25,7 @@ import { GraphQLModule } from "@nestjs/graphql";
     CustomerModule,
     AddressModule,
     ProductModule,
+    SalesModule,
     ACLModule,
     AuthModule,
     HealthModule,
@@ -34,20 +36,20 @@ import { GraphQLModule } from "@nestjs/graphql";
     ServeStaticModule.forRootAsync({
       useClass: ServeStaticOptionsService,
     }),
-    GraphQLModule.forRootAsync({
-      useFactory: (configService) => {
-        const playground = configService.get("GRAPHQL_PLAYGROUND");
-        const introspection = configService.get("GRAPHQL_INTROSPECTION");
-        return {
-          autoSchemaFile: "schema.graphql",
-          sortSchema: true,
-          playground,
-          introspection: playground || introspection,
-        };
-      },
-      inject: [ConfigService],
-      imports: [ConfigModule],
-    }),
+    // GraphQLModule.forRootAsync({
+    //   useFactory: (configService) => {
+    //     const playground = configService.get("GRAPHQL_PLAYGROUND");
+    //     const introspection = configService.get("GRAPHQL_INTROSPECTION");
+    //     return {
+    //       autoSchemaFile: "schema.graphql",
+    //       sortSchema: true,
+    //       playground,
+    //       introspection: playground || introspection,
+    //     };
+    //   },
+    //   inject: [ConfigService],
+    //   imports: [ConfigModule],
+    // }),
   ],
   providers: [
     {
